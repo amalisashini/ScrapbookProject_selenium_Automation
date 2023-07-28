@@ -15,10 +15,11 @@ public class Profile {
     	PageFactory.initElements(driver,this);
     	    	
     }
-    
+    //xpath for 'my subject' text
     @FindBy(xpath="//span[contains(text(),'My Subjects')]")
     WebElement profileName;
     
+    //Method for 'my subject' text
     public WebElement profileName() {
     	
     	return profileName;
