@@ -19,6 +19,7 @@ public class StudentLoginTest extends Base{
 	 @BeforeMethod
 	public void openApplication() throws IOException {
 		
+		//Initialize the driver
 		driver = initializeDriver();
 		driver.get(prop.getProperty("studenturl"));
 		
@@ -27,11 +28,13 @@ public class StudentLoginTest extends Base{
 	@Test(dataProvider="getLoginData")
 	public void login(String email, String password, String expectedResult) throws IOException, InterruptedException {
 	
+		//Perform login functionality
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.emailAddressTextField().sendKeys(email);
 		loginPage.passwordField().sendKeys(password);
 		loginPage.loginButton().click();
 		
+		//Create object for profile page and check the login is successful or not
 		Profile profilePage = new Profile(driver);
 		
 		String actualResult = null;
@@ -52,6 +55,7 @@ public class StudentLoginTest extends Base{
 		
 	}
 	
+    //closing the browser
 	@AfterMethod
 	public void closure() {
 		
@@ -59,6 +63,7 @@ public class StudentLoginTest extends Base{
 		
 	}
 	
+	//Dummy data to using test login
 	@DataProvider
 	public Object[][] getLoginData() {
 		

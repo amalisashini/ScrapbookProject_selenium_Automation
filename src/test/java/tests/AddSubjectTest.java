@@ -1,11 +1,10 @@
 package tests;
 
 import java.io.IOException;
-import java.time.Duration;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -18,30 +17,30 @@ public class AddSubjectTest extends Base{
   
    WebDriver driver;    
 
-    //  @BeforeMethod
-	// public void openApplication() throws IOException {
-		
-	// 	driver = initializeDriver();
-	// 	driver.get(prop.getProperty("consumerurl"));
-		
-	// }
-
     @Test(dataProvider="giveLoginData")
 	public void login(String email, String password) throws IOException, InterruptedException {
 
+		//initialize the web URL
         driver = initializeDriver();
 		driver.get(prop.getProperty("adminurl"));
 	
+		//Perform the login functionality
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.emailAddressTextField().sendKeys(email);
 		loginPage.passwordField().sendKeys(password);
 		loginPage.loginButton().click();
 
-         AddSubjectPage subject = new AddSubjectPage(driver);
-		 subject.addSubjectBtn().click();
+		//Click on the 'Add subject' button
+		AddSubjectPage subject = new AddSubjectPage(driver);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("arguments[0].click();", subject.addSubjectBtn());
+
+		subject.subjectName().sendKeys("History");
+		
 
 	}
 
+	//Dummy data to be passed to the driver when the login
     @DataProvider
 	public Object[][] giveLoginData() {
 		
